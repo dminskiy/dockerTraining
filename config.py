@@ -5,7 +5,7 @@ class TrainConfig:
     SAVE_FINAL_MODEL = True
     CHECKPOINT_DIR = 'resources/checkpoints'
 
-    EPOCHS = 1
+    EPOCHS = 10
     SCHED_STEP = 3
     BATCH_SIZE = 500
     LR = 0.1

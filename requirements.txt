@@ -1,3 +1,4 @@
-torch
-torchvision
-tqdm
+numpy==1.21.2
+torch==1.9.1
+torchvision==0.10.1
+tqdm==4.62.3

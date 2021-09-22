@@ -1,6 +1,7 @@
+import warnings
 import torch
 from torch import nn
-from torchvision import datasets, transforms
+from torchvision import datasets, transforms, models
 import torch.optim as optim
 from torch.optim.lr_scheduler import StepLR
 import torch.nn.functional as F
@@ -13,11 +14,14 @@ import time
 
 # UTILITY FUNCTIONS
 def load_mobilenet_v2_from_pretrained(classes, model_path):
-    if not os.path.exists(model_path):
-        raise AssertionError(f'Cannot load model as model file does not exist: {model_path}')
-    state_dict = torch.load(model_path)
-    _model = MobileNetV2(num_classes=1000)
-    _model.load_state_dict(state_dict)
+    if os.path.exists(model_path):
+        state_dict = torch.load(model_path)
+        _model = MobileNetV2(num_classes=1000)
+        _model.load_state_dict(state_dict)
+    else:
+        warnings.warn(f'Cannot load model as model file does not exist: {model_path}'
+                      f'\nTrying to download from web.')
+        _model = models.mobilenet_v2(pretrained=True)
 
     # Adjust the FC layer
     _model.classifier = nn.Sequential(
